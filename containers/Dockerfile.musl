@@ -12,11 +12,11 @@ RUN apk update && apk add --update --no-cache \
     bash curl git python3 perl build-base g++ linux-headers ttf-dejavu \
     musl-dev openssl-dev gn ninja-build
 
-RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-    gperf cmake expat-static expat-dev libpng-dev
-
-# pin clang/llvm 18 from the stable repo (edge's clang 21+ removed builtins that skia's vendored skcms relies on)
-RUN apk add --update --no-cache clang18 clang18-dev llvm18 llvm18-dev && \
+# everything from the stable 3.20 repo -- mixing in edge packages breaks over time as edge
+# moves ahead of the base image (zlib conflicts, clang 21+ dropping builtins skcms uses, etc)
+RUN apk add --update --no-cache \
+    gperf cmake expat-static expat-dev libpng-dev \
+    clang18 clang18-dev llvm18 llvm18-dev && \
     ln -s /usr/bin/clang-18 /usr/bin/clang && \
     ln -s /usr/bin/clang++-18 /usr/bin/clang++
 
