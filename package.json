@@ -1,6 +1,6 @@
 {
   "name": "@documenso/skia-canvas",
-  "version": "3.0.8-documenso.0",
+  "version": "3.0.8-documenso.1",
   "description": "A multi-threaded, GPU-accelerated, Canvas API for Node",
   "author": "Christian Swinehart <drafting@samizdat.co>",
   "license": "MIT",
