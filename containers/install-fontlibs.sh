@@ -13,7 +13,8 @@ pip install meson
 FREETYPE=freetype-2.13.3
 FREETYPE_URL=https://download.savannah.gnu.org/releases/freetype/${FREETYPE}.tar.xz
 FREETYPE_CFG=/opt/freetype.cfg
-curl -sL $FREETYPE_URL | tar xJf - -C /opt
+curl -fsSL --retry 5 --retry-all-errors -o /tmp/${FREETYPE}.tar.xz $FREETYPE_URL
+tar xJf /tmp/${FREETYPE}.tar.xz -C /opt
 cd /opt/${FREETYPE} && \
    cp $FREETYPE_CFG modules.cfg && \
    make && make install
@@ -22,7 +23,8 @@ cd /opt/${FREETYPE} && \
 FONTCONFIG_VERSION=2.17.1
 FONTCONFIG=fontconfig-$FONTCONFIG_VERSION
 FONTCONFIG_URL=https://gitlab.freedesktop.org/api/v4/projects/890/packages/generic/fontconfig/$FONTCONFIG_VERSION/${FONTCONFIG}.tar.xz
-curl -sL $FONTCONFIG_URL | tar xJf - -C /opt
+curl -fsSL --retry 5 --retry-all-errors -o /tmp/${FONTCONFIG}.tar.xz $FONTCONFIG_URL
+tar xJf /tmp/${FONTCONFIG}.tar.xz -C /opt
 cd /opt/${FONTCONFIG} && \
     meson setup -Dprefix=/ -Dsysconfdir=/etc -Dlocalstatedir=/var -Ddefault_library=static -Dprefer_static=true -Dxml-backend=expat -Dtests=disabled build && \
     meson compile -C build && \
