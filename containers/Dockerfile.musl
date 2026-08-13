@@ -13,8 +13,12 @@ RUN apk update && apk add --update --no-cache \
     musl-dev openssl-dev gn ninja-build
 
 RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-    gperf cmake expat-static expat-dev libpng-dev \
-    clang clang-dev llvm llvm-dev
+    gperf cmake expat-static expat-dev libpng-dev
+
+# pin clang/llvm 18 from the stable repo (edge's clang 21+ removed builtins that skia's vendored skcms relies on)
+RUN apk add --update --no-cache clang18 clang18-dev llvm18 llvm18-dev && \
+    ln -s /usr/bin/clang-18 /usr/bin/clang && \
+    ln -s /usr/bin/clang++-18 /usr/bin/clang++
 
 # manually build freetype & fontconfig and install fontconfig in /usr/local
 COPY ./install-fontlibs.sh /opt
