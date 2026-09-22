@@ -87,7 +87,11 @@ jobs:
         libc: [glibc, musl]
     runs-on: ${{ matrix.arch == 'x64' && 'ubuntu-latest' || 'ubuntu-24.04-arm' }}
     container:
-      image: ${{ format('ghcr.io/{0}-{1}:latest', github.repository, matrix.libc) }}
+      # Upstream's public build environments (rust + skia deps only, nothing shipped).
+      # To self-host these, add a CR_PAT secret, run the "Build containers" workflow,
+      # make the resulting packages public, and restore:
+      #   image: ${{ format('ghcr.io/{0}-{1}:latest', github.repository, matrix.libc) }}
+      image: ghcr.io/documenso/skia-canvas-${{ matrix.libc }}:latest
 
     steps:
     - name: Install rust

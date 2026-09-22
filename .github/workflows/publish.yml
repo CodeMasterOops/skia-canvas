@@ -1,8 +1,9 @@
 name: Publish to NPM
 on:
+  # Consumers install this package straight from its git tag, so publishing to npm
+  # is opt-in rather than automatic on release. Needs an NPM_TOKEN secret and the
+  # @verosign scope to exist before it will succeed.
   workflow_dispatch:
-  release:
-    types: [released]
 
 jobs:
   publish:
