@@ -5,6 +5,12 @@ on:
     tags:
       - "v*"
 
+# `npm run upload` attaches each built binary to the release via `gh release upload`,
+# which needs write access to repository contents. Without this the token is read-only
+# and every job fails with "Resource not accessible by integration".
+permissions:
+  contents: write
+
 jobs:
   mac:
     strategy:
